@@ -1,11 +1,3 @@
-// let checkStats = () => {
-//     if(this.tiredness <= 0){
-//         this.tiredness = 0;
-//     } else if(this.tiredness > 100){
-//         this.tiredness = 100;
-//     }
-// };
-
 class Pet {
   constructor(name = "", animal = "") {
     this.name = name;
@@ -17,7 +9,6 @@ class Pet {
   }
   //Pet interaction
   nap() {
-    //this.tiredness = this.tiredness - 50;
     this.tiredness -= 50;
     this.happiness -= 20;
     this.hunger += 20;
@@ -25,26 +16,15 @@ class Pet {
   }
 
   play() {
-    if (this.tiredness <= 70) {
       this.tiredness += 20;
       this.happiness += 30;
       this.hunger += 20;
-      this.loneliness -= 10;
-    } else {
-      console.log("Pet is too tired");
-    }
+      this.loneliness -= 20;
   }
+
   eat() {
     this.tiredness += 10;
     this.hunger -= 60;
-    if (this.hunger <= 0) {
-      this.hunger = 0;
-    }
-  }
-  checkStats() {
-    if (this.tiredness === 0) {
-      console.log("Pet died!");
-    }
   }
 }
 
@@ -55,6 +35,12 @@ let mainPetContainer = document.querySelector("#mainPetContainer");
 mainPetContainer.style.display = "none";
 
 createPetBtn.addEventListener("click", () => {
+  if(petNameInput.value === ""){
+    console.log("Please enter a name");
+  }
+  else{
+    console.log("Ok you good");
+  }
   let myPet = new Pet(petNameInput.value, animalList.value);
   mainPetContainer.style.display = "block";
   let imgContainer = document.createElement("div");
@@ -83,7 +69,7 @@ createPetBtn.addEventListener("click", () => {
   let eatBtn = document.createElement("button");
   napBtn.textContent = "Nap";
   playBtn.textContent = "Play";
-  eatBtn.textContent = "Eat";
+  eatBtn.textContent = "Feed";
 
   //Assign classNames to divs (for CSS)
   petContainer.className = "petContainer";
@@ -110,11 +96,11 @@ createPetBtn.addEventListener("click", () => {
     imgContainer.append(petImg);
   } else if (myPet.animal === "Dog") {
     petImg.src = "./img/pixel-dog.png";
-    petImg.style.width = "300px";
+    petImg.style.width = "225px";
     imgContainer.append(petImg);
   } else if (myPet.animal === "Rabbit") {
     petImg.src = "./img/pixel-rabbit.png";
-    petImg.style.width = "300px";
+    petImg.style.width = "225px";
     imgContainer.append(petImg);
   }
 
@@ -126,8 +112,18 @@ createPetBtn.addEventListener("click", () => {
     loneliness.textContent = `Loneliness: ${myPet.loneliness} `;
   };
 
-  //Initiate pet stats
+  //Initiate pet stat-text
   updateStats();
+
+  //Change the stats over time
+  let statChange = () => {
+    myPet.tiredness += 2;
+    myPet.happiness--;
+    myPet.loneliness++;
+    myPet.hunger += 2;
+    updateStats();
+  }
+  setInterval(statChange, 4000);
 
   //Append stats
   petContainer.appendChild(statContainer);
@@ -142,10 +138,15 @@ createPetBtn.addEventListener("click", () => {
   });
 
   playBtn.addEventListener("click", () => {
-    myPet.play();
-    updateStats();
-    petActivity.textContent = `You played with ${myPet.name}!`;
-    console.log(myPet);
+    if (myPet.tiredness >= 70) {
+      updateStats();
+      petActivity.textContent = `${myPet.name} is too tired to play!`;
+    } else {
+      myPet.play();
+      updateStats();
+      petActivity.textContent = `You played with ${myPet.name}!`;
+    }
+
   });
 
   eatBtn.addEventListener("click", () => {
