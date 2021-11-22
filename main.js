@@ -15,7 +15,7 @@ class Pet {
     this.hunger = 50;
     this.loneliness = 50;
   }
-  //Metoder
+  //Pet interaction
   nap() {
     //this.tiredness = this.tiredness - 50;
     this.tiredness -= 50;
@@ -52,41 +52,24 @@ let createPetBtn = document.querySelector("#createPetBtn");
 let petNameInput = document.querySelector("#petNameInput");
 let animalType = document.querySelector("#animalList option:checked");
 let mainPetContainer = document.querySelector("#mainPetContainer");
-
+mainPetContainer.style.display = "none";
 
 createPetBtn.addEventListener("click", () => {
   let myPet = new Pet(petNameInput.value, animalList.value);
+  mainPetContainer.style.display = "block";
   let imgContainer = document.createElement("div");
   let petContainer = document.createElement("div");
-  petContainer.style.border = "1px black solid";
-  mainPetContainer.appendChild(petContainer);
-  petContainer.appendChild(imgContainer);
+  let btnContainer = document.createElement("div");
+  let statContainer = document.createElement("div");
+  let titleContainer = document.createElement("div");
 
-  //For the pet
+  //Name, type and activity text
   let petName = document.createElement("p");
-  let animal = document.createElement("p");
+  let petType = document.createElement("p");
   let petActivity = document.createElement("p");
-  petActivity.textContent = "";
+  petActivity.textContent = `${myPet.name} is looking at you...`;
   petName.textContent = `Name: ${myPet.name}`;
-  animal.textContent = `Animal: ${myPet.animal}`;
-
-  //Pet image
-  let petImg = document.createElement("img");
-  if (myPet.animal === "Cat") {
-    petImg.src = "./img/pixel-cat.jpg";
-    petImg.style.width = "300px";
-    imgContainer.append(petImg);
-
-  } else if(myPet.animal === "Dog"){
-    petImg.src = "./img/pixel-dog.png";
-    petImg.style.width = "300px";
-    imgContainer.append(petImg);
-
-  } else if(myPet.animal === "Rabbit"){
-    petImg.src = "./img/pixel-rabbit.png";
-    petImg.style.width = "300px";
-    imgContainer.append(petImg);
-  }
+  petType.textContent = `Animal: ${myPet.animal}`;
 
   //Create stat tags
   let tiredness = document.createElement("p");
@@ -102,22 +85,55 @@ createPetBtn.addEventListener("click", () => {
   playBtn.textContent = "Play";
   eatBtn.textContent = "Eat";
 
+  //Assign classNames to divs (for CSS)
+  petContainer.className = "petContainer";
+  imgContainer.className = "imgContainer";
+  btnContainer.className = "btnContainer";
+  statContainer.className = "statContainer";
+  titleContainer.className = "titleContainer";
+  //classNames for p elements
+  petName.className = "petName";
+  petType.className = "petType"
+  petActivity.className = "petActivity";
+
+  //Append containers, text and buttons
+  mainPetContainer.appendChild(petContainer);
+  petContainer.append(titleContainer, imgContainer, petActivity, btnContainer);
+  titleContainer.append(petName, petType);
+  btnContainer.append(napBtn, playBtn, eatBtn);
+
+  //Pet image, choose image depending on type
+  let petImg = document.createElement("img");
+  if (myPet.animal === "Cat") {
+    petImg.src = "./img/pixel-cat.png";
+    petImg.style.width = "225px";
+    imgContainer.append(petImg);
+  } else if (myPet.animal === "Dog") {
+    petImg.src = "./img/pixel-dog.png";
+    petImg.style.width = "300px";
+    imgContainer.append(petImg);
+  } else if (myPet.animal === "Rabbit") {
+    petImg.src = "./img/pixel-rabbit.png";
+    petImg.style.width = "300px";
+    imgContainer.append(petImg);
+  }
+
+  //Function to update stat text
   let updateStats = () => {
-    tiredness.textContent = `Tiredness: ${myPet.tiredness}`;
-    happiness.textContent = `Happiness: ${myPet.happiness}`;
-    hunger.textContent = `Hunger: ${myPet.hunger}`;
-    loneliness.textContent = `Loneliness: ${myPet.loneliness}`;
+    tiredness.textContent = `Tiredness: ${myPet.tiredness} `;
+    happiness.textContent = `Happiness: ${myPet.happiness} `;
+    hunger.textContent = `Hunger: ${myPet.hunger} `;
+    loneliness.textContent = `Loneliness: ${myPet.loneliness} `;
   };
 
-  //Refresh pet stats
+  //Initiate pet stats
   updateStats();
 
-  //Append pet information
-  petContainer.append(petName, animal);
-  petContainer.append(tiredness, happiness, hunger, loneliness);
-  petContainer.append(napBtn, playBtn, eatBtn, petActivity);
+  //Append stats
+  petContainer.appendChild(statContainer);
+  statContainer.append(tiredness, happiness, hunger, loneliness);
 
-  //Pet interaction
+  //Pet button interaction
   napBtn.addEventListener("click", () => {
     myPet.nap();
     updateStats();
