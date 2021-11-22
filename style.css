@@ -2,6 +2,13 @@ body {
   font-family: "Segoe UI";
   color: #694f62;
   background-color: rgb(255, 235, 238);
+    width: 75%;
+    margin: auto;
+}
+
+h1 {
+    width: 50%;
+    margin: 10px auto 10px auto;
 }
 
 label {
@@ -27,18 +34,37 @@ button {
   font-family: "Segoe UI";
 }
 
-.nameContainer {
+.headerContainer {
+    width: 550px;
+    margin: auto;
+}
+
+/* .createPetContainer {
+    width: 50%;
+    margin: auto;
+} */
+
+.mainPetContainer {
+  width: 75%;
+  margin: auto;
+}
+
+/* .nameContainer {
+  width: 50%;
+  margin: auto;
   margin-bottom: 10px;
 }
 
 .typeContainer {
-  margin-bottom: 10px;
-}
+    width: 50%;
+    margin: auto;
+    margin-bottom: 10px;
+} */
 
 /*Div containing all the pet information*/
 .petContainer {
   width: 550px;
-  margin-top: 15px;
+  margin: 10px auto 10px auto;
   border: 3px solid #694f62;
   border-radius: 15px;
   background-color: rgb(255, 223, 227);

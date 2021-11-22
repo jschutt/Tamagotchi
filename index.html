@@ -9,7 +9,8 @@
   </head>
 
   <body>
-    <h1>Tamagotchi</h1>
+    <div class="headerContainer">
+      <h1>Tamagotchi</h1>
     <div class="nameContainer">
       <label for="petName">Choose your pet name: </label>
       <input type="text" name="petName" id="petNameInput" />
@@ -22,7 +23,10 @@
         <option value="Rabbit">Rabbit</option>
       </select>
     </div>
+    <div class="createPetContainer">
     <button id="createPetBtn">Create my pet!</button>
+  </div>
+</div>
 
     <div id="mainPetContainer" class="mainPetContainer"></div>
     <script src="main.js"></script>
